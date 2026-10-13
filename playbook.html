@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playbook CL-SCREEN-001</title>
+<style>
+:root{
+  --bg:#0b0f17; --panel:#111826; --panel2:#151e2f; --line:#24304a;
+  --navy:#1F3864; --navy2:#2c4f8f; --text:#d7e0f0; --dim:#8a97b2;
+  --green:#3ddc97; --amber:#f2b84b; --red:#ff6b6b; --cyan:#5cc8ff;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14px;line-height:1.5;
+  background-image:radial-gradient(circle at 50% -10%,#14213b 0,transparent 60%)}
+.wrap{max-width:860px;margin:0 auto;padding:16px 14px 60px}
+.card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--navy2);border-radius:8px;padding:12px 14px;margin:0}
+.flow>*+*{position:relative;margin-top:26px}
+.flow>*+*::before{content:"";position:absolute;left:50%;top:-26px;height:26px;border-left:2px solid var(--navy2)}
+.flow>*+*::after{content:"";position:absolute;left:calc(50% - 5px);top:-8px;border:5px solid transparent;border-top:7px solid var(--navy2);border-bottom:0}
+.label{font-size:11px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+h1{font-size:18px;margin:4px 0 6px;letter-spacing:.04em}
+h1 span{color:var(--cyan)}
+p{margin:4px 0}
+.dim{color:var(--dim)}
+.head{background:linear-gradient(135deg,var(--navy),#16264a);border-color:var(--navy2)}
+.node{background:var(--navy);border:1px solid var(--navy2);border-radius:999px;text-align:center;padding:10px 16px;letter-spacing:.12em;font-weight:700}
+.node small{display:block;font-weight:400;letter-spacing:0;color:#b9c8e6;font-size:12px}
+.grid{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+.rc{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;text-align:left;color:inherit;font:inherit;width:100%;display:block}
+.rc:hover,.rc:focus-visible{border-color:var(--cyan);outline:none}
+.rc .top{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.rc .name{font-weight:700}
+.rc .num{color:var(--dim);margin-right:6px}
+.tag{font-size:10px;letter-spacing:.12em;padding:2px 7px;border-radius:4px;border:1px solid var(--navy2);background:var(--navy);color:#cfe0ff;white-space:nowrap;flex:none}
+.tag.low{background:transparent;color:var(--dim);border-color:var(--line)}
+.rc .one{color:var(--dim);margin-top:4px;font-size:13px}
+.beats{display:none;margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+.rc.open .beats{display:block}
+.beat{margin:6px 0;padding-left:10px;border-left:2px solid var(--navy2)}
+.beat b{display:block;font-size:10px;letter-spacing:.12em;color:var(--cyan);text-transform:uppercase}
+.gap{border:1px dashed var(--amber);border-left:1px dashed var(--amber);background:#17140a}
+.gap h2,.intel h2,.fp h2{font-size:13px;letter-spacing:.14em;margin:0 0 8px;text-transform:uppercase}
+.gap h2{color:var(--amber)}
+.gline{background:#0e1119;border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin:8px 0;cursor:pointer}
+.gline .gh{font-weight:700;color:var(--amber)}
+.gline .gt{display:none;margin-top:6px}
+.gline.open .gt{display:block}
+.fp{border-color:#5a2a2a;border-left-color:var(--red);background:#160e10}
+.fp h2{color:var(--red)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid #6b3434;color:#ffb3b3;border-radius:999px;padding:2px 10px;font-size:12px}
+.intel h2{color:var(--green)}
+.intel{border-left-color:var(--green)}
+.intel label{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.intel label:last-child{border:0}
+.intel input{margin-top:4px;width:18px;height:18px;accent-color:var(--green);flex:none}
+.intel input:checked+span{color:var(--dim);text-decoration:line-through}
+.closure{background:var(--navy);border-color:var(--navy2);border-left-color:var(--cyan)}
+.closure .q{font-weight:700;color:#fff}
+/* practice */
+.prac{border-left-color:var(--cyan)}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.stat{background:#0e1119;border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:12px}
+.stat b{color:var(--cyan);font-size:15px}
+.cov{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.cv{font-size:11px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
+.cv.on{background:var(--green);color:#04210f;border-color:var(--green);font-weight:700}
+button.b{font:inherit;cursor:pointer;border-radius:6px;border:1px solid var(--navy2);background:var(--navy);color:#fff;padding:9px 14px;min-height:42px}
+button.b:hover{background:var(--navy2)}
+button.b:disabled{opacity:.4;cursor:not-allowed}
+button.b.ghost{background:transparent;color:var(--dim);border-color:var(--line)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.grade button{flex:1;min-width:90px}
+.g-n{background:#10432c!important;border-color:var(--green)!important}
+.g-s{background:#4a3a0f!important;border-color:var(--amber)!important}
+.g-m{background:#4a1a1a!important;border-color:var(--red)!important}
+.drawn{margin-top:10px;background:#0e1119;border:1px solid var(--line);border-radius:8px;padding:12px}
+.drawn .qn{font-size:16px;font-weight:700;margin:4px 0}
+.timer{height:8px;background:#0e1119;border:1px solid var(--line);border-radius:99px;overflow:hidden;margin-top:8px}
+.timer i{display:block;height:100%;width:100%;background:var(--cyan);transition:width 1s linear}
+.timer.low i{background:var(--red)}
+.clock{font-size:26px;font-weight:700;color:var(--cyan)}
+.clock.low{color:var(--red)}
+.answer{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+.hide{display:none!important}
+.foot{text-align:center;color:var(--dim);font-size:11px;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="flow">
+
+  <section class="card head">
+    <div class="label">Playbook</div>
+    <h1><span>PLAYBOOK CL-SCREEN-001</span></h1>
+    <p>Critical Loop phone screen, Inventory Buyer BESS Systems.</p>
+    <p class="dim">Interviewer is ex VP Operations. Expect operational questions, not HR checkbox ones.</p>
+  </section>
+
+  <section class="card prac" id="practice">
+    <div class="label">Practice mode</div>
+    <div class="stats">
+      <div class="stat">Score <b id="sScore">0</b></div>
+      <div class="stat">Streak <b id="sStreak">0</b></div>
+      <div class="stat">Best streak <b id="sBest">0</b></div>
+      <div class="stat">Answered <b id="sAns">0</b></div>
+    </div>
+    <div class="label">Story coverage</div>
+    <div class="cov" id="cov"></div>
+    <div class="row">
+      <button class="b" id="drawBtn">Draw a random alert</button>
+      <button class="b ghost" id="resetBtn">Reset session</button>
+    </div>
+    <div class="drawn hide" id="drawn">
+      <div class="label" id="dKind"></div>
+      <div class="qn" id="dQ"></div>
+      <div class="clock" id="clock">60</div>
+      <div class="timer" id="tbar"><i id="tfill"></i></div>
+      <p class="dim" id="tmsg">Answer out loud. Reveal when you are done or when time runs out.</p>
+      <div class="row"><button class="b" id="revealBtn">Reveal</button></div>
+      <div class="answer hide" id="answer">
+        <div id="aBody"></div>
+        <div class="row grade">
+          <button class="b g-n" data-g="n">Nailed it</button>
+          <button class="b g-s" data-g="s">Shaky</button>
+          <button class="b g-m" data-g="m">Missed</button>
+        </div>
+      </div>
+      <div class="hide" id="after">
+        <p id="afterMsg" class="dim"></p>
+        <div class="row"><button class="b" id="nextBtn">Next draw</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="label">Baseline</div>
+    <p><b>Data and Inventory Analyst at IPS Industries since January 2023.</b></p>
+    <p>27 national accounts, 7 warehouses. Dynamics NAV daily, Excel.</p>
+    <p class="dim">Decides when to order, works vendors, sets up agreements, keeps sales and the customer informed before they have to ask.</p>
+  </section>
+
+  <div class="node">CLASSIFY<small>What kind of alert is this? Name it, pick the play.</small></div>
+
+  <div class="grid" id="grid"></div>
+
+  <section class="card gap" id="gapPanel">
+    <h2>Gap probe</h2>
+    <p class="dim">Approved responses. Say them as written. Tap to open.</p>
+    <div id="gaps"></div>
+  </section>
+
+  <section class="card fp">
+    <h2>False positives. Never claim.</h2>
+    <div class="chips" id="fps"></div>
+  </section>
+
+  <section class="card intel">
+    <h2>Intel. Collect before the call ends.</h2>
+    <div id="intel"></div>
+  </section>
+
+  <section class="card closure">
+    <div class="label">Closure</div>
+    <p>If pay comes up, the line is <span class="q">"The posted range works for me,"</span> never anchor lower.</p>
+    <p><b>Final action:</b> ask next steps and timeline.</p>
+  </section>
+
+</div>
+<div class="foot">Progress saves on this device only.</div>
+</div>
+
+<script>
+(function(){
+var STORIES=[
+ {id:"s1",alert:"Late shipment, stockout, expedite",tag:"EXPEDITE",one:"Weekly replenishment before the holidays, overseas shipping late, domestic bridge.",
+  q:"A shipment is late and you are about to stock out. Walk me through one you handled.",
+  beats:[["Situation","An account moved its replenishment from every 4 to 6 weeks per distribution center to weekly, right before the holidays."],
+         ["Problem","Overseas production was shipping late November."],
+         ["Action","Got the ship date moved up a few weeks and the quantity adjusted with the factory, and presented domestic production to bridge the gap."],
+         ["Result","Domestic pricing and quantity approved, now processing the RFQs for the purchasing team."]]},
+ {id:"s2",alert:"Backup: shipment arrived after the agreed date",tag:"BACKUP",one:"Mapped the PO schedule, fast tracked, told the coordinator first.",
+  q:"Tell me about a shipment that showed up after the date you were promised.",
+  beats:[["Situation","A shipment arrived after the agreed date."],
+         ["Action","Pulled the PO schedule, mapped when the next order could realistically be covered, and fast tracked what could arrive sooner with purchasing."],
+         ["Communication","Told the account coordinator the timeline before the customer asked."],
+         ["Habit now","Standing practice: stay ahead on stock, request blanket agreements sooner, communicate early."]]},
+ {id:"s3",alert:"Shortage, no backorder",tag:"EXPEDITE",one:"Vendor will not backorder, so transfer stock between warehouses.",
+  q:"The vendor will not take a backorder and you are short. What do you do?",
+  beats:[["Move","If a vendor will not take a backorder, cover the gap with an internal transfer from a warehouse that has the stock."],
+         ["How","Rush it over the road or by rail."],
+         ["Who","Coordinate with the warehouse team."]]},
+ {id:"s4",alert:"Receiving, short shipment, invoice mismatch",tag:"RECONCILE",one:"Reconcile to the PO, short pay to match receipt, align three teams.",
+  q:"The shipment is short and the invoice does not match. How do you handle it?",
+  beats:[["Reconcile","Reconcile the shipment to the PO."],
+         ["Pay","Short pay the invoice to match what was received."],
+         ["Align","Get purchasing, the warehouse, and accounting aligned on the correction."]]},
+ {id:"s5",alert:"Damaged or missing material",tag:"VENDOR CLAIM",one:"Here the company is the buyer. Work it with the vendor for credit.",
+  q:"Material arrives damaged or missing. What is your process?",
+  beats:[["Position","In this one the company is the buyer, not the vendor."],
+         ["Action","Worked the missing and damaged cases down with the vendor so the company could get credit."],
+         ["Records","Documented everything so inventory and purchasing records match."]]},
+ {id:"s6",alert:"Crisis, protect the company",tag:"CONTAINMENT",one:"Account filed Chapter 11 mid cycle. Cancel POs, size exposure, brief sales.",
+  q:"Tell me about a time you had to protect the company from a risk on an account.",
+  beats:[["Situation","An account filed Chapter 11 mid cycle."],
+         ["Action","Cancelled the open POs right away, calculated and documented the inventory cost exposure, and gave sales a clear summary for direction."],
+         ["Now","The account now has new owners and is still supported, replenishment on an approval basis only. An approval step was added to satisfy Accounting and the CFO."],
+         ["Standing arrangement","The inventory agreement with a set stock level, min and max."]]},
+ {id:"s7",alert:"Systems, how do you track it",tag:"TOOLING",one:"NAV daily, Excel tracking log, Python flagging tool, Lists board.",
+  q:"How do you track all of this? What systems do you use?",
+  beats:[["Daily","Dynamics NAV daily."],
+         ["Excel","Built an Excel shipment tracking log from scratch because shipment details kept getting lost in email threads: expected arrivals, delivery windows, last free dates in one place."],
+         ["Python","Built a Python exception flagging tool that checks NAV against warehouse counts, about 40 percent better discrepancy detection."],
+         ["Lists","Built a Microsoft Lists board for tracking accounts, modeled on a SIEM style dashboard."]]},
+ {id:"s8",alert:"Caught a problem early",tag:"DETECTION",low:true,one:"Low priority. High volume account pulling less than forecast.",
+  q:"Give me an example of catching a problem before it got big.",
+  beats:[["Situation","A high volume account kept pulling less than forecast."],
+         ["Action","Asked sales and the account coordinator why instead of only flagging the number."],
+         ["Finding","The customer was setting up a new distribution center."],
+         ["Result","Helped move that along so inventory was not sitting idle. Usage is still low but more consistent since the callout."]]}
+];
+var GAPS=[
+ {id:"g1",name:"Negotiation",q:"How much price negotiation have you done with vendors?",
+  line:"Formal price negotiation sits above me. My side is the quotes, the comparisons, the vendor coordination, and building the case for approval."},
+ {id:"g2",name:"Batteries",q:"What is your background with batteries or energy storage?",
+  line:"No professional background in it, but I have an EV and I follow the technology closely. Charging, degradation, efficiency, how the formulations behave in heat and cold, and which chemistry fits which application, that side I know as an owner."},
+ {id:"g3",name:"Engineers",q:"How closely do you work with engineers?",
+  line:"I do not work with engineers directly. Where I touch their output is reconciling BOMs against physical inventory."}
+];
+var FPS=["SAP","Ariba","SQL","Tableau","Power BI","Closing negotiations","Manufacturing","MRP depth","Oracle","Aerospace","Any customer name"];
+var INTEL=["Who do I report to, is the manager seat still open.","Is the seat in Torrance or Long Beach.","What does success look like in the first 90 days.","What systems does the team run now."];
+var KEY="cl-screen-001-v1", GAP_RATE=0.18, LOW_WEIGHT=0.3, SECS=60;
+
+function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.cov)return s}catch(e){}return {cov:{},score:0,streak:0,best:0,ans:0,intel:{}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var S=load(); if(!S.intel)S.intel={};
+var $=function(id){return document.getElementById(id)};
+function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.textContent=h;return e}
+
+// cards
+var grid=$("grid");
+STORIES.forEach(function(s,i){
+  var b=el("button","rc");b.type="button";b.setAttribute("aria-expanded","false");
+  var top=el("div","top");var nm=el("div","name");
+  nm.appendChild(el("span","num",(i+1)+"."));nm.appendChild(document.createTextNode(s.alert));
+  top.appendChild(nm);top.appendChild(el("span","tag"+(s.low?" low":""),s.tag));
+  b.appendChild(top);b.appendChild(el("div","one",s.one));
+  var bt=el("div","beats");
+  s.beats.forEach(function(x){var d=el("div","beat");d.appendChild(el("b",null,x[0]));d.appendChild(document.createTextNode(x[1]));bt.appendChild(d)});
+  b.appendChild(bt);
+  b.addEventListener("click",function(){var o=b.classList.toggle("open");b.setAttribute("aria-expanded",o)});
+  grid.appendChild(b);
+});
+var gaps=$("gaps");
+GAPS.forEach(function(g){
+  var d=el("div","gline");d.tabIndex=0;
+  d.appendChild(el("div","gh",g.name));
+  d.appendChild(el("div","gt",'"'+g.line+'"'));
+  var t=function(){d.classList.toggle("open")};
+  d.addEventListener("click",t);
+  d.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();t()}});
+  gaps.appendChild(d);
+});
+FPS.forEach(function(f){$("fps").appendChild(el("span","chip",f))});
+INTEL.forEach(function(t,i){
+  var l=el("label");var c=document.createElement("input");c.type="checkbox";c.checked=!!S.intel[i];
+  c.addEventListener("change",function(){S.intel[i]=c.checked;save()});
+  l.appendChild(c);l.appendChild(el("span",null,t));$("intel").appendChild(l);
+});
+
+// stats
+function render(){
+  $("sScore").textContent=S.score;$("sStreak").textContent=S.streak;$("sBest").textContent=S.best;$("sAns").textContent=S.ans;
+  var c=$("cov");c.textContent="";
+  STORIES.forEach(function(s,i){c.appendChild(el("span","cv"+(S.cov[s.id]?" on":""),(i+1)+" "+s.tag))});
+}
+render();
+
+// practice
+var cur=null,last=null,t0=0,left=SECS,iv=null,graded=false;
+function pick(){
+  var item;
+  for(var tries=0;tries<10;tries++){
+    if(Math.random()<GAP_RATE){
+      item={kind:"gap",d:GAPS[Math.floor(Math.random()*GAPS.length)]};
+    }else{
+      var tot=0,w=STORIES.map(function(s){var x=s.low?LOW_WEIGHT:1;tot+=x;return x});
+      var r=Math.random()*tot,k=0;
+      for(;k<STORIES.length-1;k++){r-=w[k];if(r<=0)break}
+      item={kind:"story",d:STORIES[k]};
+    }
+    if(!last||item.d.id!==last)break;
+  }
+  return item;
+}
+function stopTimer(){if(iv){clearInterval(iv);iv=null}}
+function tick(){
+  left--;if(left<0)left=0;
+  $("clock").textContent=left;
+  $("tfill").style.width=(left/SECS*100)+"%";
+  var low=left<=10;$("clock").classList.toggle("low",low);$("tbar").classList.toggle("low",low);
+  if(left===0){stopTimer();$("tmsg").textContent="Time. Wrap up the thought, then tap Reveal."}
+}
+function draw(){
+  stopTimer();cur=pick();last=cur.d.id;graded=false;left=SECS;
+  $("drawn").classList.remove("hide");
+  $("answer").classList.add("hide");$("after").classList.add("hide");
+  $("revealBtn").disabled=false;
+  $("dKind").textContent=cur.kind==="gap"?"Gap probe":"Alert: "+cur.d.tag;
+  $("dQ").textContent=cur.d.q;
+  $("clock").textContent=SECS;$("clock").classList.remove("low");$("tbar").classList.remove("low");
+  var f=$("tfill");f.style.transition="none";f.style.width="100%";void f.offsetWidth;f.style.transition="";
+  $("tmsg").textContent="Answer out loud. Reveal when you are done or when time runs out.";
+  iv=setInterval(tick,1000);
+  $("drawn").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function reveal(){
+  stopTimer();$("revealBtn").disabled=true;
+  var b=$("aBody");b.textContent="";
+  if(cur.kind==="gap"){
+    b.appendChild(el("div","label","Approved line, word for word"));
+    b.appendChild(el("p",null,'"'+cur.d.line+'"'));
+  }else{
+    b.appendChild(el("div","label","Mapped story: "+cur.d.alert));
+    cur.d.beats.forEach(function(x){var d=el("div","beat");d.appendChild(el("b",null,x[0]));d.appendChild(document.createTextNode(x[1]));b.appendChild(d)});
+  }
+  $("answer").classList.remove("hide");
+}
+function grade(g){
+  if(graded||!cur)return;graded=true;
+  S.ans++;
+  if(g==="n"){S.score+=2;S.streak++;if(S.streak>S.best)S.best=S.streak;if(cur.kind==="story")S.cov[cur.d.id]=true}
+  else if(g==="s"){S.score+=1;S.streak=0}
+  else{S.streak=0}
+  save();render();
+  $("answer").classList.add("hide");
+  var done=STORIES.every(function(s){return S.cov[s.id]});
+  $("afterMsg").textContent=done?"All stories covered. Keep drilling the gap lines.":
+    (g==="n"?"Logged. Nailed it.":g==="s"?"Logged. Shaky. It will come back around.":"Logged. Missed. Re read the beats and go again.");
+  $("after").classList.remove("hide");
+}
+$("drawBtn").addEventListener("click",draw);
+$("nextBtn").addEventListener("click",draw);
+$("revealBtn").addEventListener("click",reveal);
+Array.prototype.forEach.call(document.querySelectorAll(".grade button"),function(b){
+  b.addEventListener("click",function(){grade(b.getAttribute("data-g"))});
+});
+$("resetBtn").addEventListener("click",function(){
+  if(!confirm("Clear coverage, streak, score, and intel checks?"))return;
+  stopTimer();
+  S={cov:{},score:0,streak:0,best:0,ans:0,intel:{}};save();render();
+  $("drawn").classList.add("hide");cur=null;last=null;
+  Array.prototype.forEach.call(document.querySelectorAll(".intel input"),function(c){c.checked=false});
+});
+})();
+</script>
+</body>
+</html>
