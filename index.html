@@ -88,7 +88,7 @@ p{margin:4px 0}
     <button class="rc wide" type="button" aria-expanded="false">
       <div class="top"><div class="name"><span class="num">1.</span>INTRO</div><span class="tag">OPEN</span></div>
       <div class="one">Who you are, what you own, why Silvus.</div>
-      <div class="script"><p>"Sure. I'm a Data and Inventory Analyst at IPS, I've been there since January of 2023. Day to day I look after inventory and purchasing for 27 national accounts spread across 7 warehouses, and I do the data analysis behind it, so I'm in Microsoft Dynamics Navision pretty much all day. I'm the one deciding when we need to order, and I drive the timing on it. I put in the quote requests, and on one account I'm actually the buyer, so those POs are mine start to finish. I reconcile our counts, I run the reporting, and I keep an eye on accounts before they run into their agreement limits. A big part of my job has also become building the tools we were missing. I built our shipment tracking log, I write the Excel macros my team uses, and I put together a Python tool that flags where our counts and our system don't agree. Silvus caught my eye because it's a buying role at a technology company, and from the posting it owns more of the process end to end than mine does now. That's the direction I want to go."</p></div>
+      <div class="script"><p>"Sure. I'm a Data and Inventory Analyst at IPS, I've been there since January of 2023. Day to day I look after inventory and purchasing for 27 national accounts spread across 7 warehouses, and I do the data analysis behind it, so I'm in Microsoft Dynamics Navision pretty much all day. I'm the one deciding when we need to order, and I drive the timing on it. I put in the quote requests, and on one account I handle the purchasing myself, from the sales approval through the RFQs, the POs, and the vendor communication. I reconcile our counts, I run the reporting, and I keep an eye on accounts before they run into their agreement limits. A big part of my job has also become building the tools we were missing. I built our shipment tracking log, I write the Excel macros my team uses, and I put together a Python tool that flags where our counts and our system don't agree. Silvus caught my eye because it's a buying role at a technology company, and from the posting it owns more of the process end to end than mine does now. That's the direction I want to go."</p></div>
     </button>
 
     <button class="rc" type="button" aria-expanded="false">
@@ -110,37 +110,55 @@ p{margin:4px 0}
     </button>
 
     <button class="rc" type="button" aria-expanded="false">
-      <div class="top"><div class="name"><span class="num">5.</span>PYTHON TOOL</div><span class="tag">TOOLING</span></div>
-      <div class="one">Navision vs physical counts, 40 percent better detection.</div>
-      <div class="script"><p>"I built a Python tool that pulls our data out of Navision and compares it against our physical counts, the monthly cycle counts and the quarterly full counts. It tracks how many times we've counted each item and how many times the count changed, so the repeat problems show up instead of hiding. By my before and after numbers, detection got about 40 percent better, and finishing the counts went from about 3 to 4 hours down to about 2."</p></div>
+      <div class="top"><div class="name"><span class="num">5.</span>THE VENDOR ACCOUNT YOU OWN</div><span class="tag">BUYER</span></div>
+      <div class="one">Sales approval, RFQs, POs, vendor communication.</div>
+      <div class="script"><p>"There's one vendor account where I handle the purchasing myself. That's the sales approval, the RFQs, the purchase orders, and the vendor communication. I trained on it first, and after my promotion I took it on fully."</p></div>
     </button>
 
     <button class="rc" type="button" aria-expanded="false">
-      <div class="top"><div class="name"><span class="num">6.</span>TRANSFER MACRO</div><span class="tag">TOOLING</span></div>
-      <div class="one">Excel macros I wrote, pallets per truck, trained the team.</div>
-      <div class="script"><p>"When a customer won't take backorders, we cover it with transfers between warehouses. I built that list in Excel with macros I wrote. It pulls from a database tab sorted by origin warehouse, figures the pallets per truck, 42,000 pounds and 52 pallets a load, and the buttons clear out the old transfers, hide the empty rows, and reset the sheet. I wrote the walkthrough for it too and trained the team on it."</p></div>
+      <div class="top"><div class="name"><span class="num">6.</span>PYTHON TOOL</div><span class="tag">TOOLING</span></div>
+      <div class="one">Warehouse counts vs a Navision export, fewer recounts, 3 to 4 hours down to 2.</div>
+      <div class="script"><p>"The warehouse does the physical counts, and I put their results into Excel. My Python tool compares them to an export from Navision and flags the mismatches. It also tracks how often an item shows up as a mismatch and whether it cleared, so clean items don't get recounted and the repeat problems show up instead of hiding. By my own before and after comparison, it's about 40 percent better, with fewer recounts and better detection, and my processing time per cycle went from about 3 to 4 hours down to about 2."</p></div>
     </button>
 
     <button class="rc" type="button" aria-expanded="false">
-      <div class="top"><div class="name"><span class="num">7.</span>SHORT SHIPMENT</div><span class="tag">RECONCILE</span></div>
-      <div class="one">25 on the PO, 23 arrived, recount, one corrected count.</div>
-      <div class="script"><p>"A vendor shipped us short one time, 25 cases on the PO and 23 showed up. I reconciled the receipt against the PO, had the warehouse recount so we were sure about the 23, and put the proof together. Accounting handled the short pay, and I made sure purchasing, the warehouse, and accounting were all on the same corrected count."</p></div>
+      <div class="top"><div class="name"><span class="num">7.</span>SHIPMENT TRACKING LOG</div><span class="tag">TOOLING</span></div>
+      <div class="one">Container arrivals were buried in email, now one trusted view.</div>
+      <div class="script"><p>"Arrival info for inbound containers came in by email, and the team kept missing it. So I built one Excel view they could trust, with container and booking numbers, expected arrivals, delivery windows, and last free dates. I maintain it, and the users have given positive feedback. It also shows the average time between ETD and ETA, how many days ahead of the last free date we are on average, and how many times a last free date was missed."</p></div>
     </button>
 
     <button class="rc" type="button" aria-expanded="false">
-      <div class="top"><div class="name"><span class="num">8.</span>LATE SHIPMENT</div><span class="tag">EXPEDITE</span></div>
+      <div class="top"><div class="name"><span class="num">8.</span>TRANSFER MACRO</div><span class="tag">TOOLING</span></div>
+      <div class="one">Buttons and a pallets per truck calculator added, walkthrough, trained the team.</div>
+      <div class="script"><p>"When a customer won't take backorders, we cover it with transfers between warehouses, and those are limited by truck capacity, 42,000 pounds and 52 pallets a load. The Excel transfer list already existed, with a database tab sorted by origin. To save time, I added buttons that clear the old transfers, hide the rows with nothing to transfer, and reset the sheet. I also added a calculator for pallets per truck, including the pallet weight. I wrote a walkthrough for it and trained the team on it, and I also wrote our cycle count procedure."</p></div>
+    </button>
+
+    <button class="rc" type="button" aria-expanded="false">
+      <div class="top"><div class="name"><span class="num">9.</span>SHORT SHIPMENT</div><span class="tag">RECONCILE</span></div>
+      <div class="one">25 ordered, 23 received, confirm, then reship or short pay.</div>
+      <div class="script"><p>"A PO showed received under one time, 25 ordered and 23 received. I had the warehouse confirm the count and I told the vendor. From there it's a choice. If the item is critical, I ask for a reship. Otherwise accounting short pays the invoice, which is usually what we do, because the vendor minimum is about 1,200 pounds across items, so a small reship can trigger a charge. Either way, I make sure purchasing, the warehouse, and accounting are all on the same corrected count."</p></div>
+    </button>
+
+    <button class="rc" type="button" aria-expanded="false">
+      <div class="top"><div class="name"><span class="num">10.</span>LATE SHIPMENT</div><span class="tag">EXPEDITE</span></div>
       <div class="one">Timeline out before the customer asks, fast track.</div>
       <div class="script"><p>"A national account's shipment came in late. I pulled the PO schedule and built a timeline of when we could actually cover their next order, and I got that to my account coordinator and sales before the customer had to come asking. I also got fast tracking going with purchasing on what could land sooner. The account stayed covered, and now that timeline just goes out early on all my accounts."</p></div>
     </button>
 
     <button class="rc" type="button" aria-expanded="false">
-      <div class="top"><div class="name"><span class="num">9.</span>A DISCREPANCY YOU CAUGHT</div><span class="tag">DETECTION</span></div>
+      <div class="top"><div class="name"><span class="num">11.</span>A DISCREPANCY YOU CAUGHT</div><span class="tag">DETECTION</span></div>
       <div class="one">Flag every cycle, find the cause, fix the record.</div>
       <div class="script"><p>"Counts are the big one. Our system would say one thing and the warehouse count would say another, and before I built my tool, those only surfaced when an account got shorted. Now the mismatches get flagged every cycle, I dig into whether it was a receiving error, a miscount, or a system issue, and the record gets corrected before it turns into a customer problem."</p></div>
     </button>
 
     <button class="rc wide" type="button" aria-expanded="false">
-      <div class="top"><div class="name"><span class="num">10.</span>STRENGTHS</div><span class="tag">STRENGTH</span></div>
+      <div class="top"><div class="name"><span class="num">12.</span>PLANNING LOGIC</div><span class="tag">PLANNING</span></div>
+      <div class="one">Reorder point, safety stock, forecast, scenario testing.</div>
+      <div class="script"><p>"On the planning side, I work with reorder point and safety stock logic, forecast analysis, and scenario analysis. For example, I'll test how a two week late shipment changes days of supply, and that tells me whether to expedite or move stock."</p></div>
+    </button>
+
+    <button class="rc wide" type="button" aria-expanded="false">
+      <div class="top"><div class="name"><span class="num">13.</span>STRENGTHS</div><span class="tag">STRENGTH</span></div>
       <div class="one">Care about the work, catch things early, fix the process.</div>
       <div class="script"><p>"If I had to sum it up, I care about the work. I pay attention to my products and my accounts, and I catch things early, because I'd rather fix a problem two weeks out than explain it the day it lands. When part of the process is slow or keeps breaking, I don't just work around it. I try to improve it. That's where the Python tool came from, I saw the counts eating hours every month and I built something to fix it. And I'm always researching and learning on my own. I like understanding how the whole thing fits together, not just my piece of it."</p></div>
     </button>
